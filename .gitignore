@@ -1,3 +1,4 @@
 .env
 node_modules/
 latest.json
+test.ts
