@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@types/nodemailer": "^6.4.7",
+    "@types/nunjucks": "^3.2.1",
     "dotenv": "^16.0.3",
     "nodemailer": "^6.9.1",
+    "nunjucks": "^3.2.3",
     "puppeteer": "^19.6.2"
   },
   "devDependencies": {

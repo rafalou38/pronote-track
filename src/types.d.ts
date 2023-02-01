@@ -1,3 +1,16 @@
+export interface CleanNote {
+  id: string;
+
+  classe: string;
+  grade: number;
+  max: number;
+
+  fait: string;
+  rendu?: string;
+
+  color: string;
+}
+
 export interface Notes {
   avecDetailDevoir: boolean;
   avecDetailService: boolean;
