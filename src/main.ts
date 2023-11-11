@@ -28,6 +28,7 @@ async function gotData(notes: Notes) {
   const newGrades: CleanNote[] = [];
   const oldGrades: CleanNote[] = [];
 
+  notes.listeDevoirs.V.reverse();
   for (const note of notes.listeDevoirs.V) {
     const fait = note.date.V;
     const basePayload: CleanNote = {
