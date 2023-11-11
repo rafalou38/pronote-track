@@ -10,7 +10,8 @@ import { advert } from "./advert";
 
 const SELECTOR_ID = '[placeholder="Identifiant"]';
 const SELECTOR_PASSWORD = '[placeholder="Mot de passe"]';
-const SELECTOR_SUBMIT = "button#id_12";
+const SELECTOR_SUBMIT = "button#id_11";
+const SELECTOR_NOTES_TAB = "#GInterface\\.Instances\\[0\\]\\.Instances\\[1\\]_Combo2";
 
 const LATEST_PATH = "latest.json";
 
@@ -30,6 +31,7 @@ async function gotData(notes: Notes) {
     const fait = note.date.V;
     const basePayload: CleanNote = {
       id: note.N,
+      commentaire: note.commentaire,
       fait,
       classe: note.service.V.L,
       grade: parseFloat(note.note.V.replace(",", ".")),
@@ -69,14 +71,15 @@ async function main() {
   assert(process.env.id);
   assert(process.env.password);
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
   page.on("response", async (response) => {
     try {
       const data = await response.json();
-      const notes: Notes | null = data?.donneesSec?.donnees?.notes;
-      if (notes) {
+      if (data?.donneesSec?.donnees?.listeDevoirs) {
+        const notes: Notes = data.donneesSec.donnees;
+
         await page.close();
         await browser.close();
 
@@ -101,6 +104,10 @@ async function main() {
   await page.type(SELECTOR_PASSWORD, process.env.password);
 
   await page.click(SELECTOR_SUBMIT);
+
+  await page.waitForSelector(SELECTOR_NOTES_TAB);
+  await delay(2);
+  await page.click(SELECTOR_NOTES_TAB);
 }
 
 main();
