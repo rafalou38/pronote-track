@@ -17,10 +17,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function advert(newGrades: CleanNote[], oldGrades: CleanNote[]) {
+export async function advert(newGrades: CleanNote[], oldGrades: CleanNote[], chartURI: string) {
   assert(template);
 
-  const html = nun.renderString(template, { newGrades, oldGrades });
+  const html = nun.renderString(template, { newGrades, oldGrades, chartURI });
 
   let info = await transporter.sendMail({
     from: process.env.sender,

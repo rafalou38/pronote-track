@@ -7,6 +7,7 @@ import { CleanNote, Note, Notes } from "./types";
 import { exit } from "process";
 import { writeFileSync, readFileSync } from "fs";
 import { advert } from "./advert";
+import { getChartDataURL } from "./chart";
 
 const SELECTOR_ID = '[placeholder="Identifiant"]';
 const SELECTOR_PASSWORD = '[placeholder="Mot de passe"]';
@@ -56,7 +57,8 @@ async function gotData(notes: Notes) {
     console.log("sending:");
     console.log("\t new:", newGrades.length);
     console.log("\t old:", oldGrades.length);
-    await advert(newGrades, oldGrades);
+    const chartURI = await getChartDataURL(notes);
+    await advert(newGrades, oldGrades, chartURI);
     writeFileSync(LATEST_PATH, JSON.stringify([...newGrades, ...oldGrades]));
   } else {
     console.log("nothing new");
