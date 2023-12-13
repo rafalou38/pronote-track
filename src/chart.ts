@@ -12,8 +12,10 @@ export function getChartDataURL(notes: Notes) {
     } catch (error) {}
 
     const date = new Date().toLocaleDateString();
-    const selfMean = notes.listeDevoirs.V.reduce((a, b) => a +  parseFloat(b.note.V.replace(",", "."))/ parseInt(b.bareme.V) * 20, 0) / notes.listeDevoirs.V.length;
-    const classMean = notes.listeDevoirs.V.reduce((a, b) => a + parseFloat(b.moyenne.V.replace(",", "."))/ parseInt(b.bareme.V) * 20, 0) / notes.listeDevoirs.V.length;
+    const clean = notes.listeDevoirs.V.filter(a=>!isNaN(parseFloat(a.note.V.replace(",", "."))));
+    
+    const selfMean = clean.reduce((a, b) => a +  parseFloat(b.note.V.replace(",", "."))/ parseInt(b.bareme.V) * 20, 0) / clean.length;
+    const classMean = clean.reduce((a, b) => a + parseFloat(b.moyenne.V.replace(",", "."))/ parseInt(b.bareme.V) * 20, 0) / clean.length;
 
     records.push({self: selfMean, class: classMean, date});
 
