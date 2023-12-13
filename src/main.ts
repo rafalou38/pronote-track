@@ -40,6 +40,7 @@ async function gotData(notes: Notes) {
       max: parseFloat(note.bareme.V.replace(",", ".")),
       color: note.service.V.couleur,
     };
+    if(isNaN(basePayload.grade)) continue;
     const id = basePayload.fait + basePayload.classe + basePayload.grade;
     basePayload.id = id;
 
